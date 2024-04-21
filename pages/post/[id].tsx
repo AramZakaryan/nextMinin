@@ -4,9 +4,10 @@ import Link from "next/link";
 import {GetStaticProps, NextPageContext} from "next";
 import Posts, {PostType} from "@/pages/posts";
 import {useEffect, useState} from "react";
+import {redirect} from "next/navigation";
 
-export default function Post({postServer}: { postServer: PostType }) {
-    const [post, setPost] = useState<PostType>(postServer)
+export default function Post({postFromServer}: { postFromServer: PostType }) {
+    const [post, setPost] = useState<PostType>(postFromServer)
 
     const {query} = useRouter()
 
@@ -18,7 +19,7 @@ export default function Post({postServer}: { postServer: PostType }) {
             setPost(json)
         }
 
-        if (!postServer) load()
+        if (!postFromServer) load()
 
     }, []);
 
@@ -44,8 +45,8 @@ export default function Post({postServer}: { postServer: PostType }) {
 Post.getInitialProps = async ({query, req}: NextPageContext) => {
     const id = query.id
     if (!req) return {postServer: null}
-    await new Promise(resolve => setTimeout(resolve, 1500))
+    await new Promise(resolve => setTimeout(resolve, 1500)) // for delay
     const response = await fetch(`http://localhost:4200/posts/${id}`)
-    const postServer = await response.json()
-    return {postServer}
+    const postFromServer = await response.json()
+    return {postFromServer}
 }
