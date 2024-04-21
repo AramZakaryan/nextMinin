@@ -13,7 +13,7 @@ export default function Posts({postsServer}: Props) {
     useEffect(() => {
         async function load() {
             await new Promise(resolve => setTimeout(resolve, 1500))
-            const response = await fetch("http://localhost:4200/posts")
+            const response = await fetch(`${process.env.API_URL}posts`)
             const json = await response.json()
             setPosts(json)
         }
@@ -42,7 +42,7 @@ export default function Posts({postsServer}: Props) {
 Posts.getInitialProps = async ({req}: NextPageContext) => {
     if (!req) return {postsServer: null}
     await new Promise(resolve => setTimeout(resolve, 1500))
-    const response = await fetch("http://localhost:4200/posts")
+    const response = await fetch(`${process.env.API_URL}posts`)
     const postsServer: PostType[] = await response.json()
     return {postsServer}
 }

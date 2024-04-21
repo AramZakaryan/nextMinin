@@ -14,12 +14,12 @@ interface Props {
 export default function Post({postFromServer}: Props) {
     const [post, setPost] = useState<PostType>(postFromServer)
 
-    const {query} = useRouter()
+    const {query:{id}} = useRouter()
 
     useEffect(() => {
         async function load() {
             await new Promise(resolve => setTimeout(resolve, 1500))
-            const response = await fetch(`http://localhost:4200/posts/${query.id}`)
+            const response = await fetch(`${process.env.API_URL}posts/${id}`)
             const json = await response.json()
             setPost(json)
         }
@@ -38,7 +38,7 @@ export default function Post({postFromServer}: Props) {
 
 
     return (
-        <MainLayout title={`Post ${query.id}`}>
+        <MainLayout title={`Post ${id}`}>
             <h2>{post && post.title}</h2>
             <hr/>
             <p>{post && post.description}</p>
@@ -55,7 +55,7 @@ Post.getInitialProps = async ({query, req}: PostNextPageContext) => {
     const id = query.id
     if (!req) return {postServer: null}
     await new Promise(resolve => setTimeout(resolve, 1500)) // for delay
-    const response = await fetch(`http://localhost:4200/posts/${id}`)
+    const response = await fetch(`${process.env.API_URL}posts/${id}`)
     const postFromServer: PostType = await response.json()
     return {postFromServer}
 }
