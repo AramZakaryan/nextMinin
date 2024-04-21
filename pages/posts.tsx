@@ -3,8 +3,11 @@ import Link from "next/link";
 import {useEffect, useState} from "react";
 import {NextPageContext} from "next";
 
+type Props = {
+    postsServer: PostType[]
+}
 
-export default function Posts({postsServer}: { postsServer: PostType[] }) {
+export default function Posts({postsServer}: Props) {
     const [posts, setPosts] = useState(postsServer)
 
     useEffect(() => {
@@ -40,7 +43,7 @@ Posts.getInitialProps = async ({req}: NextPageContext) => {
     if (!req) return {postsServer: null}
     await new Promise(resolve => setTimeout(resolve, 1500))
     const response = await fetch("http://localhost:4200/posts")
-    const postsServer = await response.json()
+    const postsServer: PostType[] = await response.json()
     return {postsServer}
 }
 

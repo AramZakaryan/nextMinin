@@ -11,9 +11,7 @@
     "start": "next start",
     "lint": "next lint",
     "mock": "json-server -p 4200 db.json",
-    "devWithMock": " concurrently \"npm run dev\" \"npm run mock\" ",
-    "predeploy": "npm run build",
-    "deploy": "gh-pages -d build"
+    "devWithMock": " concurrently \"npm run dev\" \"npm run mock\" "
   },
   "dependencies": {
     "next": "14.2.2",
