@@ -18,7 +18,7 @@ export default function Post({postFromServer}: Props) {
 
     useEffect(() => {
         async function load() {
-            await new Promise(resolve => setTimeout(resolve, 1500))
+            await new Promise(resolve => setTimeout(resolve, 500))
             const response = await fetch(`${process.env.API_URL}posts/${id}`)
             const json = await response.json()
             setPost(json)
@@ -54,7 +54,7 @@ interface PostNextPageContext extends NextPageContext {
 Post.getInitialProps = async ({query, req}: PostNextPageContext) => {
     const id = query.id
     if (!req) return {postServer: null}
-    await new Promise(resolve => setTimeout(resolve, 1500)) // for delay
+    await new Promise(resolve => setTimeout(resolve, 500)) // for delay
     const response = await fetch(`${process.env.API_URL}posts/${id}`)
     const postFromServer: PostType = await response.json()
     return {postFromServer}

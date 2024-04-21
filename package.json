@@ -10,7 +10,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "mock": "json-server -p 4200 db.json",
+    "mock": "json-server -p 4400 db.json",
     "devWithMock": " concurrently \"npm run dev\" \"npm run mock\" "
   },
   "dependencies": {
